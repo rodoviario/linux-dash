@@ -12,6 +12,7 @@ import (
 var (
 	listenAddress = flag.String("listen", "0.0.0.0:80", "Where the server listens for connections. [interface]:port")
 	staticPath    = flag.String("static", "../", "Location of static files.")
+	scriptPath    = flag.String("scripts", "./linux_json_api.sh", "Location of shell scripts used to gather stats.")
 )
 
 func init() {
@@ -28,7 +29,7 @@ func main() {
 		}
 
 		// Execute the command
-		cmd := exec.Command("./linux_json_api.sh", module)
+		cmd := exec.Command(*scriptPath, module)
 		var output bytes.Buffer
 		cmd.Stdout = &output
 		err := cmd.Run()
